@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content_header %}
+  {{ build_breadcrumb('Moh', '', 'music', ['List']) }}
+{% endblock %}
+
+{% block content %}
+  {% call build_form_containers('Music' ~ ' ' ~ resources.moh.name, 'music') %}
+    {% call build_form(action=url_for('.UserView:put', id=resources.moh.uuid)) %}
+      {% call add_default_fields(form=form, submit_value="Update") %}
+	    {{ render_field(form.name) }}
+      {% endcall %}
+    {% endcall %}
+  {% endcall %}
+
+{% endblock %}

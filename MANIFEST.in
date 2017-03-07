@@ -1,0 +1,2 @@
+recursive-include moh/templates *
+recursive-include moh/static *
