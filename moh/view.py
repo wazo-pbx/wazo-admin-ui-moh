@@ -31,6 +31,6 @@ class MohView(BaseView):
     resource = 'moh'
     schema = AggregatorSchema
 
-    @classy_menu_item('.moh', 'MusicOnHold', order=1, icon="music")
+    @classy_menu_item('.moh', 'MusicOnHold', order=6, icon="music")
     def index(self):
         return super(MohView, self).index()
