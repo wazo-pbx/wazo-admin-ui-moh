@@ -5,9 +5,10 @@
 from flask_menu.classy import register_flaskview
 
 from wazo_admin_ui.helpers.plugin import create_blueprint
+from wazo_admin_ui.helpers.destination import register_listing_url
 
 from .service import MohService
-from .view import MohView
+from .view import MohView, MohListingView
 
 moh = create_blueprint('moh', __name__)
 
@@ -21,5 +22,10 @@ class Plugin(object):
         MohView.service = MohService(config['confd'])
         MohView.register(moh, route_base='/moh')
         register_flaskview(moh, MohView)
+
+        MohListingView.service = MohService(config['confd'])
+        MohListingView.register(moh, route_base='/moh_listing')
+
+        register_listing_url('context_by_type', 'moh.MohListingView:list_json')
 
         core.register_blueprint(moh)
