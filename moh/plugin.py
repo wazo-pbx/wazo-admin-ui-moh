@@ -17,13 +17,12 @@ class Plugin(object):
 
     def load(self, dependencies):
         core = dependencies['flask']
-        config = dependencies['config']
 
-        MohView.service = MohService(config['confd'])
+        MohView.service = MohService()
         MohView.register(moh, route_base='/moh')
         register_flaskview(moh, MohView)
 
-        MohListingView.service = MohService(config['confd'])
+        MohListingView.service = MohService()
         MohListingView.register(moh, route_base='/moh_listing')
 
         register_listing_url('moh', 'moh.MohListingView:list_json')
