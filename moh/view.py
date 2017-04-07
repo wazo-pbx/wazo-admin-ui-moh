@@ -44,5 +44,5 @@ class MohListingView(LoginRequiredView):
     def list_json(self):
         params = extract_select2_params(request.args)
         musiconhold = self.service.list(**params)
-        results = [{'id': moh['name'], 'text': moh['label']} for moh in musiconhold['items']]
+        results = [{'id': moh['name'], 'text': moh['name']} for moh in musiconhold['items']]
         return jsonify(build_select2_response(results, musiconhold['total'], params))
