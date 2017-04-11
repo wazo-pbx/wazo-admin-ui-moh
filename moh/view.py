@@ -22,15 +22,6 @@ class MohView(BaseView):
     def index(self):
         return super(MohView, self).index()
 
-    def _map_resources_to_form(self, resources):
-        return self.form(data=resources['moh'])
-
-    def _map_form_to_resources(self, form, form_id=None):
-        resources = {'moh': form.to_dict()}
-        if form_id:
-            resources['moh']['id'] = form_id
-        return resources
-
     def _map_resources_to_form_errors(self, form, resources):
         form.populate_errors(resources.get('moh', {}))
         return form

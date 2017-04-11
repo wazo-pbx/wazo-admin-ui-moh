@@ -7,5 +7,4 @@ from wazo_admin_ui.helpers.service import BaseConfdService
 
 class MohService(BaseConfdService):
 
-    resource_name = 'moh'
     resource_confd = 'moh'
