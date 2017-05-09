@@ -23,7 +23,7 @@ setup(
 
     entry_points={
         'wazo_admin_ui.plugins': [
-            'moh = moh.plugin:Plugin',
+            'moh = wazo_plugind_admin_ui_moh_official.plugin:Plugin',
         ]
     }
 )

@@ -1,2 +1,2 @@
-recursive-include moh/templates *
-recursive-include moh/static *
+recursive-include wazo_plugind_admin_ui_moh_official/templates *
+recursive-include wazo_plugind_admin_ui_moh_official/static *
