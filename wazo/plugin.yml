@@ -1,6 +1,6 @@
 name: admin-ui-moh
 namespace: official
-version: 0.0.2
+version: 1.0.0
 author: Wazo Team
 display_name: Music On Hold
 min_wazo_version: 17.16
