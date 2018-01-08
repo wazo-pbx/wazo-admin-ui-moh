@@ -1,6 +1,7 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+from flask_babel import lazy_gettext as l_
 from flask import jsonify, request
 from flask_menu.classy import classy_menu_item
 
@@ -15,7 +16,7 @@ class MohView(BaseView):
     form = MohForm
     resource = 'moh'
 
-    @classy_menu_item('.moh', 'MusicOnHold', order=6, icon="music")
+    @classy_menu_item('.moh', l_('MusicOnHold'), order=6, icon='music')
     def index(self):
         return super(MohView, self).index()
 

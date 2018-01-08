@@ -1,18 +1,29 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb('Moh', '', 'music', ['List']) }}
+  {{ build_breadcrumb(_('Moh'), '', 'music', ['List']) }}
 {% endblock %}
 
 {% block content %}
   {% call build_section_row() %}
-    {% call build_form_box('Music', resource.name, 'music') %}
+    {% call build_form_box(_('Music'), resource.name, 'music', container_class='col-md-6') %}
       {% call build_form(action=url_for('.MohView:put', id=resource.uuid)) %}
-        {% call add_default_fields(form=form, submit_value="Update") %}
-          {{ render_field(form.name) }}
+        {% call add_default_fields(form=form, submit_value=_('Update')) %}
+          {{ render_field(form.name, disabled=True) }}
           {{ render_field(form.mode) }}
+          {{ render_field(form.sort) }}
+          {{ render_field(form.application) }}
         {% endcall %}
       {% endcall %}
     {% endcall %}
+
+    {% call build_form_box(_('Music Files'), box_class='box-info', container_class='col-md-6') %}
+      {{ form.data }}
+    {% endcall %}
   {% endcall %}
+{% endblock %}
+
+
+{% block additional_js %}
+  <script src="{{ url_for('.static', filename='js/moh.js') }}"></script>
 {% endblock %}
