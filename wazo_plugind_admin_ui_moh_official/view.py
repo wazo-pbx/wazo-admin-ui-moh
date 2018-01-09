@@ -1,8 +1,12 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from flask import jsonify, request
+from flask_babel import lazy_gettext as l_
+from flask import jsonify, request, send_file, redirect, flash, url_for
+from flask_classful import route
 from flask_menu.classy import classy_menu_item
+from io import BytesIO
+
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
 from wazo_admin_ui.helpers.classful import extract_select2_params, build_select2_response
@@ -15,9 +19,39 @@ class MohView(BaseView):
     form = MohForm
     resource = 'moh'
 
-    @classy_menu_item('.moh', 'MusicOnHold', order=6, icon="music")
+    @classy_menu_item('.moh', l_('Musics'), order=6, icon='music')
     def index(self):
         return super(MohView, self).index()
+
+    def download_filename(self, uuid, moh_filename):
+        binary_content = self.service.download_filename(uuid, moh_filename)
+
+        return send_file(
+            BytesIO(binary_content),
+            attachment_filename=moh_filename,
+            as_attachment=True,
+            mimetype='application/octet-stream'
+        )
+
+    def delete_filename(self, uuid, moh_filename):
+        self.service.delete_filename(uuid, moh_filename)
+        return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
+                                                'get'), id=uuid))
+
+    @route('/upload_filename/<uuid>', methods=['POST'])
+    def upload_filename(self, uuid):
+        if 'moh_filename' not in request.files:
+            flash('[upload] Upload attempt with no file', 'error')
+            return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
+                                                    'get'), id=uuid))
+
+        file = request.files.get('moh_filename')
+
+        self.service.upload_filename(uuid, file.filename, file.read())
+
+        return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
+                                                'get'), id=uuid))
+
 
     def _map_resources_to_form_errors(self, form, resources):
         form.populate_errors(resources.get('moh', {}))
