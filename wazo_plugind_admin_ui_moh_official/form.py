@@ -4,10 +4,16 @@
 from flask_babel import lazy_gettext as l_
 from wtforms.fields import (SubmitField,
                             StringField,
-                            SelectField)
+                            SelectField,
+                            FieldList,
+                            FormField)
 from wtforms.validators import InputRequired
 
 from wazo_admin_ui.helpers.form import BaseForm
+
+
+class MohFilesForm(BaseForm):
+    name = StringField(l_('Name'), [InputRequired()])
 
 
 class MohForm(BaseForm):
@@ -28,4 +34,5 @@ class MohForm(BaseForm):
                            ('random_start', l_('Random start')),
                        ],
                        description=l_("The order in which files are played (only used when mode is 'files') = ['alphabetical', 'random', 'random_start']"))
+    files = FieldList(FormField(MohFilesForm))
     submit = SubmitField(l_('Submit'))

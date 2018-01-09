@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb(_('Moh'), '', 'music', ['List']) }}
+  {{ build_breadcrumb(_('Musics'), '', 'music', ['List']) }}
 {% endblock %}
 
 {% block content %}
   <section class="content">
-    {% call build_list_containers(_('Moh'), 'music') %}
+    {% call build_list_containers(_('Musics'), 'music') %}
       {% call build_list_table() %}
         {% call build_list_table_headers(get=url_for('.MohView:get', id=''), delete=url_for('.MohView:delete', id='')) %}
           <th>{{ _('Name') }}</th>
