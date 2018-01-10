@@ -25,7 +25,7 @@ class MohForm(BaseForm):
                            ('files', l_('Files')),
                            ('mp3', l_('MP3'))
                        ],
-                       description=l_("The play mode of the MOH class = ['custom', 'files', 'mp3']"))
+                       description=l_("The play mode of the MOH class"))
     application = StringField(l_('Application'), description=l_('The command to run (only used when mode is "custom")'))
     sort = SelectField(l_('Sort'),
                        choices=[
@@ -33,6 +33,6 @@ class MohForm(BaseForm):
                            ('random', l_('Random')),
                            ('random_start', l_('Random start')),
                        ],
-                       description=l_("The order in which files are played (only used when mode is 'files') = ['alphabetical', 'random', 'random_start']"))
+                       description=l_("The order in which files are played (only used when mode is 'files')"))
     files = FieldList(FormField(MohFilesForm))
     submit = SubmitField(l_('Submit'))
