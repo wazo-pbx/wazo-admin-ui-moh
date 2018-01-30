@@ -29,6 +29,7 @@ class MohForm(BaseForm):
     application = StringField(l_('Application'), description=l_('The command to run (only used when mode is "custom")'))
     sort = SelectField(l_('Sort'),
                        choices=[
+                           ('', l_('None')),
                            ('alphabetical', l_('Alphabetical')),
                            ('random', l_('Random')),
                            ('random_start', l_('Random start')),
