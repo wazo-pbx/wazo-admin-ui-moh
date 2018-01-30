@@ -1,6 +1,8 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+import cgi
+
 from flask_babel import lazy_gettext as l_
 from flask import jsonify, request, send_file, redirect, flash, url_for
 from flask_classful import route
@@ -24,13 +26,18 @@ class MohView(BaseView):
         return super(MohView, self).index()
 
     def download_filename(self, uuid, moh_filename):
-        binary_content = self.service.download_filename(uuid, moh_filename)
+        response = self.service.download_filename(uuid, moh_filename)
+        content_disposition = response.headers.get('content-disposition')
+        if content_disposition:
+            _, params = cgi.parse_header(content_disposition)
+            if params:
+                moh_filename = params['filename']
 
         return send_file(
-            BytesIO(binary_content),
+            BytesIO(response.content),
             attachment_filename=moh_filename,
             as_attachment=True,
-            mimetype='application/octet-stream'
+            mimetype=response.headers.get('content-type')
         )
 
     def delete_filename(self, uuid, moh_filename):
