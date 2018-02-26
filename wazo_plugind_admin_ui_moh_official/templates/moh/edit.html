@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb(_('Musics'), '', 'music', ['List']) }}
+  {{ build_breadcrumb(_('Musics'), '', 'music', [_('List')]) }}
 {% endblock %}
 
 {% block content %}
@@ -47,7 +47,7 @@
                   <a href="{{ url_for('.MohView:delete_filename', uuid=resource['uuid'], moh_filename=file.name) }}"
                      title="{{ _('Delete the moh file') }}"
                      class="btn btn-xs btn-default"
-                     onclick="return confirm('Are you sure you want to delete this item?');">
+                     onclick="return confirm(_('Are you sure you want to delete this item?'));">
                     <i class="fa fa-fw fa-remove"></i>
                   </a>
                 </td>
