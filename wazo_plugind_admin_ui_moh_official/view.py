@@ -3,27 +3,52 @@
 
 import cgi
 
-from io import BytesIO
-
-from flask import jsonify, request, send_file, redirect, flash, url_for
 from flask_babel import lazy_gettext as l_
+from flask import (
+    jsonify,
+    render_template,
+    request,
+    send_file,
+    redirect,
+    flash,
+    url_for
+)
 from flask_classful import route
 from flask_menu.classy import classy_menu_item
+from io import BytesIO
+from requests.exceptions import HTTPError
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
 from wazo_admin_ui.helpers.classful import extract_select2_params, build_select2_response
+from wazo_admin_ui.helpers.destination import listing_urls
 
-from .form import MohForm
+from .form import MohForm, sort_map, mode_map
 
 
 class MohView(BaseView):
-
     form = MohForm
     resource = 'moh'
 
     @classy_menu_item('.moh', l_('Musics'), order=6, icon='music')
     def index(self):
         return super(MohView, self).index()
+
+    def _index(self, form=None):
+        try:
+            resource_list = self.service.list()
+        except HTTPError as error:
+            self._flash_http_error(error)
+            return redirect(url_for('admin.Admin:get'))
+
+        form = form or self.form()
+        form = self._populate_form(form)
+
+        return render_template(self._get_template('list'),
+                               form=form,
+                               resource_list=resource_list,
+                               listing_urls=listing_urls,
+                               mode_map=mode_map,
+                               sort_map=sort_map)
 
     def download_filename(self, uuid, moh_filename):
         response = self.service.download_filename(uuid, moh_filename)

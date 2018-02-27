@@ -15,12 +15,12 @@
         {% endcall %}
         {% call(moh) build_list_table_rows(resource_list['items']) %}
           <td>{{ moh.name }}</td>
-          <td>{{ moh.mode }}</td>
+          <td>{{ mode_map[moh.mode] }}</td>
           <td>
             {% if moh.mode == 'custom' %}
               {{ _('Application') }}: {{ moh.application }}
             {% elif moh.mode == 'files' %}
-              {{ _('Sort') }}: {{ moh.sort }}
+              {{ _('Sort') }}: {{ sort_map[moh.sort] }}
             {% else %}
               -
             {% endif %}
