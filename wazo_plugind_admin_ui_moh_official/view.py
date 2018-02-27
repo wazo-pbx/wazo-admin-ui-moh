@@ -1,14 +1,14 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import cgi
 
-from flask_babel import lazy_gettext as l_
-from flask import jsonify, request, send_file, redirect, flash, url_for
-from flask_classful import route
-from flask_menu.classy import classy_menu_item
 from io import BytesIO
 
+from flask import jsonify, request, send_file, redirect, flash, url_for
+from flask_babel import lazy_gettext as l_
+from flask_classful import route
+from flask_menu.classy import classy_menu_item
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
 from wazo_admin_ui.helpers.classful import extract_select2_params, build_select2_response
@@ -58,7 +58,6 @@ class MohView(BaseView):
 
         return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
                                                 'get'), id=uuid))
-
 
     def _map_resources_to_form_errors(self, form, resources):
         form.populate_errors(resources.get('moh', {}))
